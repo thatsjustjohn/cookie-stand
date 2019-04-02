@@ -117,3 +117,17 @@ stores.forEach(function(store){
   console.log('Results: ' + store.sales.hourlyCookies);
 });
 
+
+
+var ulEl = document.getElementById('cookieHours');
+stores.forEach(function(store){
+  var numOfHours = store.sales.hourlyCookies.length;
+  for (var i = 0; i < numOfHours; i++) {
+    // create a <li> element
+    var liEl = document.createElement('li');
+    // give it content
+    liEl.textContent = store.sales.hourlyCookies[i];
+    // put it in the DOM
+    ulEl.appendChild(liEl);
+  }
+});
