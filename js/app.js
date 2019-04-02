@@ -114,6 +114,15 @@ var stores = [];
 stores.push(firstAndPike, seaTacAirport, seattleCenter, capitolHill, alki);
 //test stuff
 
+//This function is for the ID's it converts the normal string of the location into an HTML acceptable string for an ID
+function hyphenize(strToHyphenize){
+  strToHyphenize = 'store-' + strToHyphenize; //this will take care of nunbers being the stores name
+  strToHyphenize = strToHyphenize.replace(/ /g, '-');
+  console.log(strToHyphenize);
+  return strToHyphenize;
+}
+
+
 //This for loop goes through each store and does 2 things, populates the numbers for the cookies
 //As well as creates the appropriate HTML for storing the data into different ULs
 stores.forEach(function(store){
@@ -125,7 +134,7 @@ stores.forEach(function(store){
   var pEL = document.createElement('p');
   var ulEL = document.createElement('ul');
   //this sets the ID of the UL to the stores name for getting that ID for writing LI later
-  ulEL.id = store.location;
+  ulEL.id = hyphenize(store.location);
   //write the store name into the P tag
   pEL.textContent = store.location;
   //Appends these items to the DOM
@@ -136,7 +145,7 @@ stores.forEach(function(store){
 //This function actually puts the information into the auto generated HTML from the previous loop
 stores.forEach(function(store){
   //gets the elements that we want to add into by name as initiates the variables
-  var ulEl = document.getElementById(store.location);
+  var ulEl = document.getElementById(hyphenize(store.location));
   var numOfHours = store.sales.hourlyCookies.length;
   var totalCookies = 0;
   //This loop adds into all the list items to the underorder list
