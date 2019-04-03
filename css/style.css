@@ -1,5 +1,76 @@
+/* A good amount of this CSS was take and changed from Codefellows examples */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: gray
+}
+
+input {
+  border: 3px solid navy;
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+  margin: 15px;
+  /*display: block;*/
+}
+
+label {
+  color: white;
+  /*display: block;*/
+}
+
+fieldset {
+  max-width: 975px;
+  border-top: 10px solid black;
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+  border-bottom: 0px;
+  border-radius: 5px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  padding: 10px;
+  text-align: center;
+  margin: 0;
+}
+
+legend {
+  background-color: black;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 20px;
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+button {
+  color: #ff9999;
+  text-shadow: 0px 1px 1px #ffffff;
+  border: 2px solid #b2b2b2;
+  background-color: #ff9999;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F0E8C7), to(#b2b2b2));
+  background: -moz-linear-gradient(top, #F0E8C7, #b2b2b2);
+  background: -o-linear-gradient(top, #F0E8C7, #b2b2b2);
+  background: -ms-linear-gradient(top, #F0E8C7, #b2b2b2);
+}
+
+button:hover {
+  color: #ff9999;
+  border: 2px solid #a4a4a4;
+  background-color: #ff9999;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F0E8C7), to(#a4a4a4));
+  background: -moz-linear-gradient(top, #F0E8C7, #a4a4a4);
+  background: -o-linear-gradient(top, #F0E8C7, #a4a4a4);
+  background: -ms-linear-gradient(top, #F0E8C7, #a4a4a4);
+}
+
+
+
 table {
   border: 10px solid black;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 td {
