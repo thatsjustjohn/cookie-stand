@@ -1,5 +1,8 @@
 'use strict';
 
+//create stores / stores table / hours (this might change later to a hashtable)
+var stores = [];
+var storeTable = document.getElementById('stores');
 var hours = ['6am','7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
 //this is our 'database' that would hold all of the data needed to create the basic objects
@@ -12,7 +15,6 @@ var storeInformation = [
   {storeLocation : 'Alki', minCust : 2, maxCust : 16, averageCookie : 4.6}
 ];
 
-console.log(storeInformation);
 /* Below is a list of all the different sites as objects and their methods that are needed to get the information for each */
 
 //Build contructor
@@ -35,71 +37,102 @@ function StoreConstructor(storeLocation, minCust, maxCust, averageCookie) {
       this.sales.hourlyCookies.push(this.simulatedCookiesPerHour());
     }
   };
-}
+  this.getSumOfCookies = function(totalCookies, cookieNum) {
+    return totalCookies + Math.round(cookieNum);
+  };
+  this.render = function(){
+    //generate some data
+    this.calculateCookiesPerHour();
+    // make a tr
+    var trEl = document.createElement('tr');
+    // create, content, append for 'storeLocation' column
+    var tdEl = document.createElement('td');
+    tdEl.textContent = this.storeLocation;
+    trEl.appendChild(tdEl);
 
-//Create the stores array and create each individual store and put the information in there
-var stores = [];
+    //for loop for each time for cookies
+    // create, content, append for "minimum Customer" column
+    let cookieLength = this.sales.hourlyCookies.length;
+    for(var i = 0; i < cookieLength; i++){
+      tdEl = document.createElement('td');
+      tdEl.textContent = this.sales.hourlyCookies[i];
+      trEl.appendChild(tdEl);
+    }
+    // create. content, append for "total Cookies" column
+    tdEl = document.createElement('td');
+    tdEl.textContent = this.sales.hourlyCookies.reduce(this.getSumOfCookies,0);
+    trEl.appendChild(tdEl);
+    // append the tr to the table
+    storeTable.appendChild(trEl);
+
+    // this.createHTMLObjects();
+    // this.createHTMLUL();
+  };
+}
+//create each individual store and put the information in there
 storeInformation.forEach(function(singleStoreInfo){
   //create store object using constructor
   var newStore = new StoreConstructor(singleStoreInfo['storeLocation'], singleStoreInfo['minCust'], singleStoreInfo['maxCust'], singleStoreInfo['averageCookie']);
-  console.log(newStore);
   //add new store to list
   stores.push(newStore);
 });
-console.log('PRINT ARRAY OF OBJECTS');
-console.log(stores);
 
 
+console.table(stores);
 
-//This function is for the ID's it converts the normal string of the location into an HTML acceptable string for an ID
-function hyphenize(strToHyphenize){
-  strToHyphenize = 'store-' + strToHyphenize; //this will take care of nunbers being the stores name
-  strToHyphenize = strToHyphenize.replace(/ /g, '-');
-  console.log(strToHyphenize);
-  return strToHyphenize;
+//This will populate the table header
+function makeHeaderRow() {
+  var trEl = document.createElement('tr');
+  //white space for first part of table
+  var thEl = document.createElement('th');
+  trEl.appendChild(thEl);
+  //load in table hours
+  var numOfHours = hours.length;
+  for(var i = 0; i < numOfHours; i++){
+    thEl = document.createElement('th');
+    thEl.textContent = hours[i];
+    trEl.appendChild(thEl);
+  }
+  //load in totals for table header
+  thEl = document.createElement('th');
+  thEl.textContent = 'Daily Location Total';
+  trEl.appendChild(thEl);
+  storeTable.appendChild(trEl);
 }
 
-
-// OLD COLD BELOW //
-
-//This for loop goes through each store and does 2 things, populates the numbers for the cookies
-//As well as creates the appropriate HTML for storing the data into different ULs
-stores.forEach(function(store){
-  store.calculateCookiesPerHour();
-  console.log('Results: ' + store.sales.hourlyCookies);
-  //gets the salesStuff element in the code
-  var bodyEL = document.getElementById('salesStuff');
-  //creates 2 elements a P tag for the name of the location and a UL for that specific p tag
-  var pEL = document.createElement('p');
-  var ulEL = document.createElement('ul');
-  //this sets the ID of the UL to the stores name for getting that ID for writing LI later
-  ulEL.id = hyphenize(store.location);
-  //write the store name into the P tag
-  pEL.textContent = store.location;
-  //Appends these items to the DOM
-  pEL.appendChild(ulEL);
-  bodyEL.appendChild(pEL);
-});
-
-//This function actually puts the information into the auto generated HTML from the previous loop
-stores.forEach(function(store){
-  //gets the elements that we want to add into by name as initiates the variables
-  var ulEl = document.getElementById(hyphenize(store.location));
-  var numOfHours = store.sales.hourlyCookies.length;
+function renderStoreRows(){
+  stores.forEach(function(store){
+    store.render();
+  });
+  //append last row
+  var trEL = document.createElement('tr');
+  var tdEL = document.createElement('td');
+  tdEL.textContent = 'Totals';
+  trEL.appendChild(tdEL);
+  //math for totals on last row
+  var numOfHours = hours.length;
   var totalCookies = 0;
-  //This loop adds into all the list items to the underorder list
-  for (var i = 0; i < numOfHours; i++) {
-    // create a <li> element
-    var liEl = document.createElement('li');
-    // give it content
-    liEl.textContent = hours[i] + ': ' + store.sales.hourlyCookies[i] + ' Cookies';
-    // put it in the DOM
-    ulEl.appendChild(liEl);
-    // keep running total
-    totalCookies += store.sales.hourlyCookies[i];
+  for(var i = 0; i < numOfHours; i++){
+    var totalForStoresHour = 0;
+    stores.forEach(function(store){
+      totalForStoresHour += store.sales.hourlyCookies[i];
+    });
+    //This adds an element that is for a specific hour and all of the stores
+    tdEL = document.createElement('td');
+    tdEL.textContent = totalForStoresHour;
+    trEL.appendChild(tdEL);
+    console.log(totalForStoresHour);
+    totalCookies += totalForStoresHour;
   }
-  //last line addition for total
-  liEl = document.createElement('li');
-  liEl.textContent = 'Total: ' + totalCookies;
-  ulEl.appendChild(liEl);
-});
+  //ALL OF THE COOKIES!!
+  tdEL = document.createElement('td');
+  tdEL.textContent = totalCookies;
+  trEL.appendChild(tdEL);
+  //append the row to the table
+  storeTable.appendChild(trEL);
+}
+//This will populate the table full of information into the header
+makeHeaderRow();
+//This will populate the table full of information into the rows
+renderStoreRows();
+
