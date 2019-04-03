@@ -14,7 +14,7 @@ This features will progress more as the project continues
 
 ## Changes
 ### Latest changes
-(4/2/19) Refactored objects into classes. Create table to hold all of the generated content.
+(4/2/19) Refactored objects into classes. Create table to hold all of the generated content.  
 (4/1/19) Structured of objects and added of starter files to get the website working and showing data.
 
 
