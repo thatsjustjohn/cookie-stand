@@ -65,8 +65,6 @@ function StoreConstructor(storeLocation, minCust, maxCust, averageCookie) {
     // append the tr to the table
     storeTable.appendChild(trEl);
 
-    // this.createHTMLObjects();
-    // this.createHTMLUL();
   };
 }
 //create each individual store and put the information in there
@@ -76,9 +74,6 @@ storeInformation.forEach(function(singleStoreInfo){
   //add new store to list
   stores.push(newStore);
 });
-
-
-console.table(stores);
 
 //This will populate the table header
 function makeHeaderRow() {
@@ -100,6 +95,7 @@ function makeHeaderRow() {
   storeTable.appendChild(trEl);
 }
 
+//this function renders store rows.
 function renderStoreRows(){
   stores.forEach(function(store){
     store.render();
@@ -131,6 +127,8 @@ function renderStoreRows(){
   //append the row to the table
   storeTable.appendChild(trEL);
 }
+
+//These will call the functions we defined above too populate the table
 //This will populate the table full of information into the header
 makeHeaderRow();
 //This will populate the table full of information into the rows

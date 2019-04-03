@@ -10,6 +10,25 @@
 <body>
   <h1>Sales</h1>
   <a href="../index.html">Go back to main page</a>
+  <form id="store-form">
+    <fieldset>
+      <legend>Store submission form</legend>
+
+      <label for="storeLocation">Location: </label>
+      <input name="storeLocation" type="text" size="40" placeholder="Location " required />
+
+      <label for="minCust">Minimum Customers(per hour): </label>
+      <input name="minCust" type="text" size="5" placeholder="35" />
+
+      <label for="maxCust">Maximum Customers(per hour): </label>
+      <input name="maxCust" type="text" size="5" placeholder="40" />
+
+      <label for="averageCookies">Average Cookies per Customers: </label>
+      <input name="averageCookies" type="text" size="5" placeholder="3.2" />
+
+      <button type="submit">Create new store!</button>
+    </fieldset>
+  </form>
   <!-- <div id='salesStuff'></div> -->
   <table id="stores"></table>
   <script src="../js/app.js"></script>
