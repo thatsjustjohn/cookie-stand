@@ -1,8 +1,22 @@
 /* A good amount of this CSS was take and changed from Codefellows examples */
+h1 {
+  font-size: 2em;
+  color: black;
+  text-align: center;
+}
 
 body {
   font-family: Arial, sans-serif;
   background-color: gray
+}
+
+#form-table-div {
+  margin: 0 auto;
+  width: 75%;
+}
+
+form {
+  display: block;
 }
 
 input {
@@ -19,7 +33,7 @@ label {
 }
 
 fieldset {
-  max-width: 975px;
+  max-width: 980px;
   border-top: 10px solid black;
   border-left: 10px solid black;
   border-right: 10px solid black;
@@ -63,8 +77,6 @@ button:hover {
   background: -o-linear-gradient(top, #F0E8C7, #a4a4a4);
   background: -ms-linear-gradient(top, #F0E8C7, #a4a4a4);
 }
-
-
 
 table {
   border: 10px solid black;
