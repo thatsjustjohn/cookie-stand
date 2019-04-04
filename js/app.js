@@ -42,8 +42,6 @@ function StoreConstructor(storeLocation, minCust, maxCust, averageCookie) {
     return totalCookies + Math.round(cookieNum);
   };
   this.render = function(){
-    //generate some data
-    this.calculateCookiesPerHour();
     // make a tr
     var trEl = document.createElement('tr');
     // create, content, append for 'storeLocation' column
@@ -72,6 +70,8 @@ function StoreConstructor(storeLocation, minCust, maxCust, averageCookie) {
 storeInformation.forEach(function(singleStoreInfo){
   //create store object using constructor
   var newStore = new StoreConstructor(singleStoreInfo['storeLocation'], singleStoreInfo['minCust'], singleStoreInfo['maxCust'], singleStoreInfo['averageCookie']);
+  //generate some data
+  newStore.calculateCookiesPerHour();
   //add new store to list
   stores.push(newStore);
 });
@@ -161,6 +161,9 @@ function handleStoreSubmit(event) {
   if(event.target.minCust.value >= event.target.maxCust.value){
     return alert('Max must be greater or equal to the Min!');
   }
+  if(event.target.minCust.value < 0 || event.target.maxCust.value < 0 || event.target.averageCookies.value < 0){
+    return alert('Values must be positive numbers');
+  }
 
   event.preventDefault(); // gotta have it for this purpose. prevents page reload on a 'submit' event
 
@@ -171,6 +174,8 @@ function handleStoreSubmit(event) {
 
   //create new store object
   var newStore = new StoreConstructor(storeLocation, minCust, maxCust, averageCookies);
+  //generate data for the store
+  newStore.calculateCookiesPerHour();
   //add store to list
   stores.push(newStore);
   console.log(newStore);
