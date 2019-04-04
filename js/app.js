@@ -3,6 +3,7 @@
 //create stores / stores table / hours (this might change later to a hashtable)
 var stores = [];
 var storeTable = document.getElementById('stores');
+var storeForm = document.getElementById('store-form');
 var hours = ['6am','7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
 //this is our 'database' that would hold all of the data needed to create the basic objects
@@ -34,15 +35,13 @@ function StoreConstructor(storeLocation, minCust, maxCust, averageCookie) {
   this.calculateCookiesPerHour = function(){
     var numOfHours = hours.length;
     for(var i = 0; i < numOfHours; i++){
-      this.sales.hourlyCookies.push(this.simulatedCookiesPerHour());
+      this.sales.hourlyCookies[i] = this.simulatedCookiesPerHour();
     }
   };
   this.getSumOfCookies = function(totalCookies, cookieNum) {
     return totalCookies + Math.round(cookieNum);
   };
   this.render = function(){
-    //generate some data
-    this.calculateCookiesPerHour();
     // make a tr
     var trEl = document.createElement('tr');
     // create, content, append for 'storeLocation' column
@@ -71,6 +70,8 @@ function StoreConstructor(storeLocation, minCust, maxCust, averageCookie) {
 storeInformation.forEach(function(singleStoreInfo){
   //create store object using constructor
   var newStore = new StoreConstructor(singleStoreInfo['storeLocation'], singleStoreInfo['minCust'], singleStoreInfo['maxCust'], singleStoreInfo['averageCookie']);
+  //generate some data
+  newStore.calculateCookiesPerHour();
   //add new store to list
   stores.push(newStore);
 });
@@ -128,9 +129,83 @@ function renderStoreRows(){
   storeTable.appendChild(trEL);
 }
 
-//These will call the functions we defined above too populate the table
-//This will populate the table full of information into the header
-makeHeaderRow();
-//This will populate the table full of information into the rows
-renderStoreRows();
+function renderAllData(){
+  //These will call the functions we defined above too populate the table
+  //This will populate the table full of information into the header
+  makeHeaderRow();
+  //This will populate the table full of information into the rows
+  renderStoreRows();
+}
+
+
+//renders all of the data!
+renderAllData();
+
+//clear all table data
+function clearAllData(){
+  storeTable.innerHTML = '';
+}
+
+
+// This function is the function for the event handler for the submission of stores
+function handleStoreSubmit(event) {
+  console.log('log of event.target.storeLocation.value', event.target.storeLocation.value);
+
+  event.preventDefault(); // gotta have it for this purpose. prevents page reload on a 'submit' event
+
+  // Validation to prevent empty form fields
+  if (!event.target.storeLocation.value || !event.target.minCust.value || !event.target.maxCust.value || !event.target.averageCookies.value) {
+    return alert('Fields cannot be empty!');
+  }
+  // check if max is less than min, also make sure they are all numbers
+  if(Number(event.target.minCust.value) >= Number(event.target.maxCust.value)){
+    console.log(Number(event.target.minCust.value) + ' ' + Number(event.target.maxCust.value));
+    return alert('Max must be greater or equal to the Min!');
+  }
+  //check for duplicate store name
+  var duplicate = false;
+  stores.forEach(function(store){
+    if(store.storeLocation.toLowerCase() === event.target.storeLocation.value.toLowerCase() ){
+      duplicate = true;
+      return;
+    }
+  });
+  if(duplicate){
+    return alert('Dupliate store name!');
+  }
+
+  event.preventDefault(); // gotta have it for this purpose. prevents page reload on a 'submit' event
+
+  var storeLocation = event.target.storeLocation.value;
+  var minCust = event.target.minCust.value;
+  var maxCust = event.target.maxCust.value;
+  var averageCookies = event.target.averageCookies.value;
+
+  //create new store object
+  var newStore = new StoreConstructor(storeLocation, minCust, maxCust, averageCookies);
+  //generate data for the store
+  newStore.calculateCookiesPerHour();
+  //add store to list
+  stores.push(newStore);
+  console.log(newStore);
+
+  // This empties the form fields after the data has been grabbed
+  event.target.storeLocation.value = null;
+  event.target.minCust.value = null;
+  event.target.maxCust.value = null;
+  event.target.averageCookies.value = null;
+
+  alert('Store has been created!');
+
+  clearAllData();
+  renderAllData();
+//  allComments.unshift(newComment);
+  //renderAllComments();
+}
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Event listener for comment submission form
+storeForm.addEventListener('submit', handleStoreSubmit);
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
