@@ -158,11 +158,20 @@ function handleStoreSubmit(event) {
     return alert('Fields cannot be empty!');
   }
   // check if max is less than min, also make sure they are all numbers
-  if(event.target.minCust.value >= event.target.maxCust.value){
+  if(Number(event.target.minCust.value) >= Number(event.target.maxCust.value)){
+    console.log(Number(event.target.minCust.value) + ' ' + Number(event.target.maxCust.value));
     return alert('Max must be greater or equal to the Min!');
   }
-  if(event.target.minCust.value < 0 || event.target.maxCust.value < 0 || event.target.averageCookies.value < 0){
-    return alert('Values must be positive numbers');
+  //check for duplicate store name
+  var duplicate = false;
+  stores.forEach(function(store){
+    if(store.storeLocation.toLowerCase() === event.target.storeLocation.value.toLowerCase() ){
+      duplicate = true;
+      return;
+    }
+  });
+  if(duplicate){
+    return alert('Dupliate store name!');
   }
 
   event.preventDefault(); // gotta have it for this purpose. prevents page reload on a 'submit' event
