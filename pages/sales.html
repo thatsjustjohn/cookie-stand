@@ -8,29 +8,32 @@
   <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
 </head>
 <body>
-  <h1>Sales</h1>
-  <a href="../index.html">Go back to main page</a>
-  <form id="store-form">
-    <fieldset>
-      <legend>Store submission form</legend>
+  <div id="main-div">
+    <a href="../index.html">Go back to main page</a>
+    <h1>Sales</h1>
+    <div id="form-table-div">
+      <form id="store-form">
+        <fieldset>
+          <legend>Store submission form</legend>
 
-      <label for="storeLocation">Location: </label>
-      <input name="storeLocation" type="text" size="40" placeholder="Location " required />
+          <label for="storeLocation">Location: </label>
+          <input name="storeLocation" type="text" size="35" placeholder="Location " required maxlength="35" />
 
-      <label for="minCust">Minimum Customers(per hour): </label>
-      <input name="minCust" type="text" size="5" placeholder="35" />
+          <label for="minCust">Minimum Customers(per hour): </label>
+          <input name="minCust" type="number" size="5" placeholder="35" required min="1" max="10000"/>
 
-      <label for="maxCust">Maximum Customers(per hour): </label>
-      <input name="maxCust" type="text" size="5" placeholder="40" />
+          <label for="maxCust">Maximum Customers(per hour): </label>
+          <input name="maxCust" type="number" size="5" placeholder="40" required min="1" max="10000"/>
 
-      <label for="averageCookies">Average Cookies per Customers: </label>
-      <input name="averageCookies" type="text" size="5" placeholder="3.2" />
+          <label for="averageCookies">Average Cookies per Customers: </label>
+          <input name="averageCookies" type="number" size="5" placeholder="3.2" step="0.01" required min="1"/>
 
-      <button type="submit">Create new store!</button>
-    </fieldset>
-  </form>
-  <!-- <div id='salesStuff'></div> -->
-  <table id="stores"></table>
+          <button type="submit">Create new store!</button>
+        </fieldset>
+      </form>
+      <table id="stores"></table>
+    </div>
+  </div>
   <script src="../js/app.js"></script>
 </body>
 </html>
