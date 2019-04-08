@@ -15,6 +15,23 @@ body {
   width: 75%;
 }
 
+div {
+  margin: 0 auto;
+  width: 75%;
+}
+div ul li {
+  display: inline;
+}
+
+div ul li img {
+  height: 300px;
+  width: 300px;
+}
+
+.single {
+  width: 50%;
+}
+
 form {
   display: block;
 }

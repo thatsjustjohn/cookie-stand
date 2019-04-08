@@ -171,7 +171,7 @@ function handleStoreSubmit(event) {
     }
   });
   if(duplicate){
-    return alert('Dupliate store name!');
+    return alert('Duplicate store name!');
   }
 
   event.preventDefault(); // gotta have it for this purpose. prevents page reload on a 'submit' event
